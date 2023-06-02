@@ -1,0 +1,70 @@
+<div class="row mt-4">
+  <div class="col-md-6 d-none d-md-block" style="height: 450px;">
+    <div class="text-center col-md-12 my-auto side-heder">
+      <h3>Bem-vindo(a) a BITCOINSCHOOL</h3>
+      <img src="../../../../assets/img/logo-bitcoin-school-144x68.png" class="my-4" alt="" width="180px">
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div>
+      <h3>Anote sua Frase de Recuperação Secreta</h3>
+      <h6>Guarde-a em um lugar de sua confiança ao qual somente você tenha acesso.</h6>
+      <h6>Salve em um gerenciador de senhas, cofre de banco e anote em vários locais secretos.</h6>
+    </div><br>
+    <form [formGroup]="seedForm">
+      <div class="row" formArrayName="seedWords">
+        <div class="col-md-4" *ngFor="let wordControl of seedWords.controls; let i = index;">
+          <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">{{i + 1}}.</div>
+          </div>
+          <input class="form-control" type="text"
+          [formControlName]="i"
+          [placeholder]="'Word ' + (i + 1)"
+          [ngClass]="{ 'is-invalid':  (submitted || wordControl.touched) && wordControl.hasError('required')}">
+        </div><br>
+        </div>
+      </div>
+    </form>
+    <form class="p-1" [formGroup]="registerFormGroup">
+          <div class="form-row">
+            <div class="form-group col-sm-6">
+              <input class="form-control" type="password"
+              placeholder="Senha"
+              formControlName="password"
+              [ngClass]="{ 'is-invalid':  (submitted || registerForm['password'].touched) && registerForm['password'].errors}"/>
+              <div *ngIf="registerForm['password'].hasError('required')" class="invalid-feedback">
+                Senha não informada.
+              </div>
+              <div *ngIf="registerForm['password'].hasError('minlength')" class="invalid-feedback">
+                Password precisa ter no minimo 5 caracteres.
+              </div>
+              <div *ngIf="registerForm['password'].hasError('maxlength')" class="invalid-feedback">
+                Password precisa ter no máximo 10 caracteres.
+              </div>
+            </div>
+          </div>
+        <br>
+        <div class="form-row">
+          <div class="form-group col-sm-12">
+            <input type="checkbox" name="checkboxConfirmacao"
+              formControlName="checkboxConfirmacao"
+              [(ngModel)]="checkboxConfirmacao">
+              Eu li e concordo com os <a routerLink="/termo"> Termos de Uso </a>e <a routerLink="/privacidade"> Política de Privacidade</a> do Serviço.
+            <div *ngIf="submitted && !checkboxConfirmacao">
+              <b style='color:red;'>Você precisa concordar com os termos de uso.</b>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="form-row">
+          <div class="form-group col-12">
+            <button class="btn btn-warning btn-lg btn-block"
+            (click)="restorewallet()">
+              Confirmar
+            </button>
+          </div>
+        </div>
+    </form>
+  </div>
+</div>
